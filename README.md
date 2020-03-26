@@ -22,3 +22,6 @@
 * `kubectl get rs` - get replica set
 * `kubectl scale deployments/<your deployment> --replicas=n` - scale your deployment to 4 replicas
 * `kubectl get pods -o wide` - info about pods and their replicas
+* `kubectl run webui-service --image=webui-service --image-pull-policy=Never` - create pod from local docker registry
+* `kubectl set image deployments/<your deployment> <previous image> = <updated name>` - set new image for deployment
+* `kubectl rollout undo deployments/<your deployment>` - undo last changes
