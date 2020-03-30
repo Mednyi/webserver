@@ -25,3 +25,7 @@
 * `kubectl run webui-service --image=webui-service --image-pull-policy=Never` - create pod from local docker registry
 * `kubectl set image deployments/<your deployment> <previous image> = <updated name>` - set new image for deployment
 * `kubectl rollout undo deployments/<your deployment>` - undo last changes
+* `kubectl create secret generic <secret name> --from-file=.dockerconfigjson=<absolute path to config.json> --type=kubernetes.io/dockerconfigjson` - create secret for docker registry (need to login first)
+* `kubectl get secret ss-secret --output=yaml` - check that secret is created and show it props in yaml format
+* `docker build . -t cr.yandex/<repo id>/<image tag>` - build docker image for cr.yandex registry
+* `docker push cr.yandex/<repo id>/<image tag>` - push built docker image to registry
