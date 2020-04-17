@@ -2,7 +2,7 @@
 // Объявление pipeline
 pipeline { 
     // Используем любой свободный Jenkins агент
-    agent docker
+    agent any
     environment { // Переменные среды
         CI = 'true' // Не требовать input от пользователя
     }
