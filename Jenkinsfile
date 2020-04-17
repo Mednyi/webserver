@@ -12,4 +12,5 @@ pipeline {
                     sh 'docker build -t clinics:latest .' // Вызов команды bash
                 }
             }
+     }
 }
