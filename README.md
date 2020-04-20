@@ -58,7 +58,7 @@ subjects:
 ```
 * Now lets get our token which will be used to access Kubernetes UI
 ```
-kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
 ```
 * Let's get down to business: start Kubernetes Web UI:
 ```
