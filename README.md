@@ -94,3 +94,41 @@ ssh -L 8000:127.0.0.1:8001 username@192.168.0.1
 http://localhost:<local port you specified for ssh>/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
 ```
 
+## Devops
+* Install Helm
+```
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
+```
+* Install Jenkins
+```
+helm install stable/jenkins --version 1.16.0
+```
+* Docker image builder config
+1. We need docker:dind image
+2. Configure container to have access to ya repo
+create secret:
+```
+echo -n '<token>' | base64
+```
+use yaml for secret
+3. configure nginx container to run kubectl (local or in pod)
+inside nginx:latest container run next commands:
+```
+apt-get update
+apt-get install curl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+mv ./kubectl /usr/local/bin/kubectl
+```
+after nginx container is modified go back to docker host and enter:
+```
+docker commit <nginx running container name>
+you will get smth like : SHA2: <image digest>
+docker tag <image digest> <path to registry>/<new tag name>
+docker push  <path to registry>/<new tag name>
+```
+4. Prepare Jenkins and Docker files for your app + prepare App.yaml
+
+
