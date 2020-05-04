@@ -11,12 +11,14 @@ metadata:
 spec:
   serviceAccountName: jenkins-deploy
   volumes:
-    - name: jenkins-home
+    - name: pvc-ce4e7c74-2d55-423c-8edc-87ce4f0f5f2f
       persistentVolumeClaim:
-         claimName: veering-toad-jenkins
+         claimName: my-release-jenkins
     - name: docker-certs
       persistentVolumeClaim:
-         claimName: dind-vol-claim
+         claimName: docker-certs-claim
+  imagePullSecrets:
+    - name: regcred2
   containers:
     - name: jenkins-dind
       image: docker:dind
@@ -36,7 +38,7 @@ spec:
               name: reg-token
               key: token
       volumeMounts:
-        - name: jenkins-home
+        - name: pvc-ce4e7c74-2d55-423c-8edc-87ce4f0f5f2f
           mountPath: /var/jenkins_home
         - name: docker-certs
           mountPath: /certs/client
@@ -51,7 +53,7 @@ spec:
         - cat
       tty: true
     - name: deploy
-      image: 'cr.yandex/crpudm53vvciv4b12jrt/mykubetest'
+      image: 'cr.yandex/crpudm53vvciv4b12jrt/mykubetest1'
       metadata:
         name: deploy-container
         labels:
